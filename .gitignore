@@ -75,4 +75,6 @@ typings/
 # FuseBox cache
 .fusebox/
 
-db
+db_volumes
+
+.DS_Store
