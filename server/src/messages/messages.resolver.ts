@@ -1,11 +1,21 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { channel } from "diagnostics_channel";
+import { Inject } from "@nestjs/common";
+import { Args, Mutation, Query, Resolver, Subscription } from "@nestjs/graphql";
+import { PubSub } from "graphql-subscriptions";
+import { PubSubTriggerKey, PUBSUB_CLIENT_NAME } from "src/constants";
+
 import { Message, Response } from "../graphql.schema";
 import { MessagesService } from "./messages.service";
 
+export interface IPublishedMessage {
+    messageId: string;
+    channelId: string;
+}
 @Resolver()
 export class MessagesResolver {
-    constructor(private messagesService: MessagesService) {}
+    constructor(
+        private messagesService: MessagesService,
+        @Inject(PUBSUB_CLIENT_NAME) private pubSubClient: PubSub
+    ) {}
 
     @Query()
     async messages(
@@ -33,7 +43,33 @@ export class MessagesResolver {
         @Args("channelId") channelId: string,
         @Args("content") content: string
     ): Promise<Response> {
-        await this.messagesService.addNewMessage(senderId, channelId, content);
+        const messageId = await this.messagesService.addNewMessage(
+            senderId,
+            channelId,
+            content
+        );
+
+        //TODO: For production grade app, use a datastore here instead
+        this.pubSubClient.publish(PubSubTriggerKey.MessageAdded, {
+            messageId,
+            channelId,
+        });
+
         return Response.OK;
+    }
+
+    @Subscription("messageAdded", {
+        filter: (payload: IPublishedMessage, variables) => {
+            return payload.channelId === variables.channelId;
+        },
+
+        async resolve(this: MessagesResolver, value: IPublishedMessage) {
+            return await this.messagesService.getMessageById(value.messageId);
+        },
+    })
+    async messageAdded() {
+        return this.pubSubClient.asyncIterator<IPublishedMessage>(
+            PubSubTriggerKey.MessageAdded
+        );
     }
 }

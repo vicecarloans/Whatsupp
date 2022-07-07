@@ -4,7 +4,17 @@ import { Repository } from "typeorm";
 import { Message } from "./message.entity";
 
 interface IMessagesService {
-    getMessages(channelId: string): Promise<Message[]>;
+    getMessages(
+        channelId: string,
+        offset?: number,
+        limit?: number
+    ): Promise<Message[]>;
+    getMessageById(messageId: string): Promise<Message>;
+    addNewMessage(
+        senderId: string,
+        channelId: string,
+        content: string
+    ): Promise<string>;
 }
 
 export class MessagesService implements IMessagesService {
@@ -48,11 +58,28 @@ export class MessagesService implements IMessagesService {
         }
     }
 
+    async getMessageById(messageId: string): Promise<Message> {
+        this.logger.log("Execute get message by Id", { messageId });
+        try {
+            const result = await this.messagesRespository
+                .createQueryBuilder("message")
+                .innerJoinAndSelect("message.sender", "sender")
+                .innerJoinAndSelect("message.channel", "channel")
+                .getOne();
+
+            this.logger.log("getMessageById executed successfully", { result });
+            return result;
+        } catch (err) {
+            this.logger.error("Failed to get message by Id", { messageId });
+            throw new Error("DATABASE_ERROR");
+        }
+    }
+
     async addNewMessage(
         senderId: string,
         channelId: string,
         content: string
-    ): Promise<boolean> {
+    ): Promise<string> {
         this.logger.log("Execute addNewMessage", {
             senderId,
             channelId,
@@ -60,7 +87,7 @@ export class MessagesService implements IMessagesService {
         });
 
         try {
-            await this.messagesRespository
+            const result = await this.messagesRespository
                 .createQueryBuilder()
                 .insert()
                 .into(Message)
@@ -77,9 +104,9 @@ export class MessagesService implements IMessagesService {
                 ])
                 .execute();
 
-            this.logger.log("Add new message successfully");
+            this.logger.log("Add new message successfully", { result });
 
-            return true;
+            return result.identifiers[0].id;
         } catch (err) {
             this.logger.error("Unable to add new message", { err });
             throw new Error("DATABASE_ERROR");

@@ -11,7 +11,6 @@ import { Message } from "./messages/message.entity";
 import { Channel } from "./channels/channel.entity";
 import { User } from "./users/user.entity";
 import { UsersModule } from "./users/users.module";
-
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -20,6 +19,11 @@ import { UsersModule } from "./users/users.module";
             typePaths: ["./**/*.graphql"],
             playground: true,
             debug: true,
+            installSubscriptionHandlers: true,
+            subscriptions: {
+                "graphql-ws": true,
+                "subscriptions-transport-ws": true,
+            },
         }),
         MessagesModule,
         UsersModule,
