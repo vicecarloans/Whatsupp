@@ -1,0 +1,3 @@
+type Query {
+    messages(channelId: ID!, offset: Int, limit: Int): [Message]
+}

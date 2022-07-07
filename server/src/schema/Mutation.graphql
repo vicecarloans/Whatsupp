@@ -1,0 +1,11 @@
+type Mutation {
+    """
+    Send Message
+    """
+    sendMessage(senderId: ID!, channelId: ID!, content: String!): Response!
+
+    """
+    Initialize User
+    """
+    addUser(username: String!, picture: String): User!
+}
