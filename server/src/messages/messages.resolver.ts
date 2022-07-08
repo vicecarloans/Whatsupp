@@ -58,12 +58,16 @@ export class MessagesResolver {
         return Response.OK;
     }
 
-    @Subscription("messageAdded", {
+    @Subscription(PubSubTriggerKey.MessageAdded, {
         filter: (payload: IPublishedMessage, variables) => {
+            console.log(payload);
+
             return payload.channelId === variables.channelId;
         },
 
         async resolve(this: MessagesResolver, value: IPublishedMessage) {
+            console.log(value);
+
             return await this.messagesService.getMessageById(value.messageId);
         },
     })

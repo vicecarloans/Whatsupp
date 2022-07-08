@@ -65,6 +65,7 @@ export class MessagesService implements IMessagesService {
                 .createQueryBuilder("message")
                 .innerJoinAndSelect("message.sender", "sender")
                 .innerJoinAndSelect("message.channel", "channel")
+                .where("message.id = :messageId", { messageId })
                 .getOne();
 
             this.logger.log("getMessageById executed successfully", { result });

@@ -11,6 +11,7 @@ import { Message } from "./messages/message.entity";
 import { Channel } from "./channels/channel.entity";
 import { User } from "./users/user.entity";
 import { UsersModule } from "./users/users.module";
+import { ChannelsModule } from "./channels/channels.module";
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -27,6 +28,7 @@ import { UsersModule } from "./users/users.module";
         }),
         MessagesModule,
         UsersModule,
+        ChannelsModule,
         TypeOrmModule.forRoot({
             type: "postgres",
             host: process.env.DATABASE_URL,
@@ -35,8 +37,9 @@ import { UsersModule } from "./users/users.module";
             password: process.env.DATABASE_PASSWORD,
             database: process.env.DATABASE_NAME,
             entities: [Message, Channel, User],
-            migrations: [],
+            migrations: ["src/migrations/*.ts"],
             synchronize: true,
+            migrationsRun: true,
         }),
     ],
     controllers: [AppController],
