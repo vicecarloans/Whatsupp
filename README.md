@@ -13,6 +13,8 @@ docker-compose up
 
 ## Deployment
 
+> Since App Runner currently doesn't support Websockets protocol, the deployment will work but graphql subscription won't work: https://stackoverflow.com/questions/70414143/does-aws-app-runner-properly-support-websocket-connections/70852965#70852965. In the future, this might change and unblock the subscription feature.
+
 Provisioning environment first
 
 ```
