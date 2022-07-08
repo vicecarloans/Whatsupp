@@ -13,6 +13,17 @@ docker-compose up
 
 ## Deployment
 
+Provisioning environment first
+
+```
+export DATABASE_SECRET=<your-db-secret>
+export DATABASE_USERNAME=<your-db-username>
+cdk boostrap
+cdk deploy
+```
+
+> Note that on most cases, you should restrain from execute these commands manually and instead these commands will be executed by your CI/CD
+
 ```
 aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
 ```
@@ -20,7 +31,7 @@ aws ecr get-login-password --region region | docker login --username AWS --passw
 Build & Push Web Image
 
 ```
-docker build -t whatsupp-web:latest ./web
+docker build -t whatsupp-web ./web
 docker tag whatsupp-web:latest <ecr-web-registry>:latest
 docker push <ecr-web-registry>:latest
 ```
@@ -28,7 +39,7 @@ docker push <ecr-web-registry>:latest
 Build & Push Server Image
 
 ```
-docker build -t whatsupp-server:latest ./server
+docker build -t whatsupp-server ./server
 docker tag whatsupp-server:latest <ecr-server-registry>:latest
 docker push <ecr-server-registry>:latest
 ```

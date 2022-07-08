@@ -1,16 +1,43 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { SecretValue, Stack, StackProps } from "aws-cdk-lib";
+import { Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import { Construct } from "constructs";
+import { AppRunner } from "./app-runner";
+import { Aurora } from "./aurora";
+import { ECR } from "./ecr";
+import { Network } from "./network";
 
 export class InfraStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
+    readonly ecr: ECR;
+    readonly appRunner: AppRunner;
+    readonly aurora: Aurora;
+    readonly network: Network;
 
-    // The code that defines your stack goes here
+    constructor(scope: Construct, id: string, props?: StackProps) {
+        super(scope, id, props);
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'InfraQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
-  }
+        const auroraPassword = SecretValue.unsafePlainText(
+            process.env.DATABASE_SECRET!
+        );
+
+        const appRunnerRole = new Role(this, "AppRunnerRole", {
+            assumedBy: new ServicePrincipal("build.apprunner.amazonaws.com"),
+        });
+
+        this.network = new Network(this);
+
+        this.ecr = new ECR(this, { appRunnerRole });
+
+        this.aurora = new Aurora(this, {
+            password: auroraPassword,
+            vpc: this.network.auroraVpc,
+        });
+
+        this.appRunner = new AppRunner(this, {
+            ecr: this.ecr,
+            auroraPassword,
+            auroraCluster: this.aurora.auroraCluster,
+            appRunnerRole,
+            vpc: this.network.auroraVpc,
+        });
+    }
 }

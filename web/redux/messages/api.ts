@@ -76,9 +76,7 @@ export const messagesApi = createApi({
                         { channelId: arg.channelId }
                     );
                 } catch (err) {
-                    console.log(
-                        "no-op in case `cacheEntryRemoved` resolves before `cacheDataLoaded`"
-                    );
+                    console.error(err);
                 }
 
                 // cacheEntryRemoved will resolve when the cache subscription is no longer active

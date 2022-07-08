@@ -8,4 +8,9 @@ type Mutation {
     Initialize User
     """
     addUser(username: String!, picture: String): User!
+
+    """
+    Add Channels
+    """
+    addChannel(name: String!): Response!
 }

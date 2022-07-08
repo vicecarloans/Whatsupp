@@ -25,6 +25,7 @@ import { ChannelsModule } from "./channels/channels.module";
                 "graphql-ws": true,
                 "subscriptions-transport-ws": true,
             },
+            introspection: true,
         }),
         MessagesModule,
         UsersModule,
@@ -38,7 +39,7 @@ import { ChannelsModule } from "./channels/channels.module";
             database: process.env.DATABASE_NAME,
             entities: [Message, Channel, User],
             migrations: ["src/migrations/*.ts"],
-            synchronize: true,
+            synchronize: true, // On a real production environment, we should turn this off and do database migrations instead
             migrationsRun: true,
         }),
     ],

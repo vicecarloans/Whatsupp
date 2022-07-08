@@ -6,6 +6,7 @@ import { Channel } from "./channel.entity";
 
 export interface IChannelsService {
     listChannels(offset: number, limit: number): Promise<Array<Channel>>;
+    addNewChannel(name: string): Promise<void>;
 }
 
 export class ChannelsService implements IChannelsService {
@@ -31,6 +32,26 @@ export class ChannelsService implements IChannelsService {
             return results;
         } catch (err) {
             this.logger.error("Failed to list channels", { err });
+            throw new Error("DATABASE_ERROR");
+        }
+    }
+
+    async addNewChannel(name: string) {
+        this.logger.log("Execute addNewChannel", { name });
+        try {
+            await this.channelsRepository
+                .createQueryBuilder("channel")
+                .insert()
+                .into(Channel)
+                .values([
+                    {
+                        name,
+                    },
+                ])
+                .execute();
+            this.logger.log("Execute addNewChannel successfully");
+        } catch (err) {
+            this.logger.error("Failed to addNewChannel", { err });
             throw new Error("DATABASE_ERROR");
         }
     }

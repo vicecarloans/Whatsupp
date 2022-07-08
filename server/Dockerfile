@@ -34,10 +34,10 @@ ENV NODE_ENV production
 USER node
 WORKDIR /app
 
-COPY --from=builder --chown=node:node /app/package.json yarn.lock ./
+COPY --from=builder --chown=node:node /app/package.json /app/yarn.lock ./
 COPY --from=builder --chown=node:node /app/node_modules/ ./node_modules/
 COPY --from=builder --chown=node:node /app/dist/ ./dist/
 
 EXPOSE 4000
 
-CMD ["node", "dist/server.js"]
+CMD ["yarn", "start:prod"]

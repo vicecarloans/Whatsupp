@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { Button, Layout, Menu, Skeleton, Typography } from "antd";
+import React, { useMemo } from "react";
+import { Layout, Menu, Skeleton, Typography } from "antd";
 import { AppProps } from "next/app";
 
 import { useListChannelsQuery } from "../redux/channels";
