@@ -8,7 +8,8 @@ Make sure you have docker installed. To run this
 docker-compose up
 ```
 
-Note that initial load is going to take sometime
+> Note that initial load is going to take sometime
+> You should also add couple of channels in database manually if testing this locally
 
 ## Deployment
 

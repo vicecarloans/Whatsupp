@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { Button, Layout, Menu, Skeleton, Typography } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { AppProps } from "next/app";
 
 import { useListChannelsQuery } from "../redux/channels";

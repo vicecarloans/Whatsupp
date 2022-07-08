@@ -58,6 +58,7 @@ const ChatView = () => {
                     <TextArea
                         rows={4}
                         onChange={(e) => setMessage(e.target.value)}
+                        value={message}
                     />
                 </Col>
                 <Col span={4}>
@@ -68,6 +69,7 @@ const ChatView = () => {
                                 channelId: channel?.id ?? "",
                                 content: message,
                             });
+                            setMessage("");
                         }}
                         disabled={isSending}
                     >
