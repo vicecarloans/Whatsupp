@@ -45,6 +45,7 @@ export class AppRunner {
             APP_RUNNER_SERVER_ID,
             {
                 sourceConfiguration: {
+                    autoDeploymentsEnabled: true,
                     authenticationConfiguration: {
                         accessRoleArn: props.appRunnerRole.roleArn,
                     },
@@ -91,6 +92,7 @@ export class AppRunner {
 
         this.appRunnerWeb = new apprunner.CfnService(scope, APP_RUNNER_WEB_ID, {
             sourceConfiguration: {
+                autoDeploymentsEnabled: true,
                 authenticationConfiguration: {
                     accessRoleArn: props.appRunnerRole.roleArn,
                 },
