@@ -12,6 +12,18 @@ docker-compose up
 
 > Note that initial load is going to take sometime
 > You should also add couple of channels in database manually if testing this locally
+> You can also add channel via graphql: http://localhost:4000/graphql
+
+```graphql
+mutation AddChannel($name: String!) {
+    addChannel(name: $name)
+}
+
+# Variables
+{
+    "name": "#general"
+}
+```
 
 ## Deployment
 
