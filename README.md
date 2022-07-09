@@ -5,6 +5,8 @@ Monorepo setup using docker-compose
 Make sure you have docker installed. To run this
 
 ```shell
+cp ./web/.env.example ./web/.env.local
+cp ./server/.env.example ./server/.env
 docker-compose up
 ```
 
