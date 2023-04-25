@@ -19,7 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prisma:migrate": "prisma migrate dev --name \"$(date +%s)\" --preview-feature",
+    "prisma:migrate": "prisma migrate dev --name",
     "generate:prisma": "prisma generate deploy",
     "generate:graphql": "ts-node generate-typings",
     "generate": "run-s generate:prisma generate:graphql"

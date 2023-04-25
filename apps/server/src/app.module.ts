@@ -6,6 +6,8 @@ import { ConfigModule } from "@nestjs/config";
 import { AppService } from "./app.service";
 import { AppResolver } from "./app.resolver";
 import { PrismaService } from "./prisma.service";
+import { ReportsResolver } from "./reports/reports.resolver";
+import { ReportsModule } from "./reports/reports.module";
 
 @Module({
   imports: [
@@ -18,6 +20,7 @@ import { PrismaService } from "./prisma.service";
       installSubscriptionHandlers: true,
       introspection: true,
     }),
+    ReportsModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver, PrismaService],
