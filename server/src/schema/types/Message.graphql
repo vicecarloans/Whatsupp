@@ -1,6 +1,0 @@
-type Message {
-    id: ID!
-    channel: Channel!
-    sender: User!
-    content: String!
-}

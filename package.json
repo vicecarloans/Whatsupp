@@ -1,0 +1,26 @@
+{
+    "name": "monorepo",
+    "version": "1.0.0",
+    "description": "Monorepo setup using docker-compose",
+    "workspaces": [
+        "apps/*",
+        "libs/*"
+    ],
+    "scripts": {
+        "dev": "turbo @vicecarloans/web#dev @vicecarloans/server#start:dev"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vicecarloans/Whatsupp.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/vicecarloans/Whatsupp/issues"
+    },
+    "homepage": "https://github.com/vicecarloans/Whatsupp#readme",
+    "devDependencies": {
+        "turbo": "^1.9.3"
+    }
+}

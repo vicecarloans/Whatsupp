@@ -1,3 +1,0 @@
-type Subscription {
-    messageAdded(channelId: ID!): Message
-}

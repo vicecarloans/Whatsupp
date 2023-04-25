@@ -1,4 +1,0 @@
-type Query {
-    messages(channelId: ID!, offset: Int, limit: Int): [Message]
-    channels(offset: Int, limit: Int): [Channel]
-}

@@ -1,4 +1,0 @@
-type Channel {
-    id: ID!
-    name: String!
-}

@@ -78,3 +78,5 @@ typings/
 db_volumes
 
 .DS_Store
+
+.turbo
