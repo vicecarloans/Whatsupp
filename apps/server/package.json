@@ -20,8 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "generate:graphql": "ts-node generate-typings",
-    "generate:migration": "typeorm migration:create ./src/migrations",
-    "migrate": "typeorm migration:run"
+    "generate": "npm run generate:graphql"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.16",
@@ -35,12 +34,11 @@
     "graphql": "^16.5.0",
     "graphql-subscriptions": "^2.0.0",
     "pg": "^8.7.3",
+    "prisma": "^4.13.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "ts-morph": "^15.1.0",
-    "typeorm": "^0.3.7",
-    "typeorm-aurora-data-api-driver": "^2.4.2"
+    "ts-morph": "^15.1.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

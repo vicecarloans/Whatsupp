@@ -8,10 +8,22 @@
             ]
         },
         "lint": {},
-        "@vicecarloans/web#dev": {
+        "//#init": {
             "cache": false
         },
+        "@vicecarloans/server#generate": {
+            "inputs": [
+                "prisma/schema.prisma"
+            ]
+        },
         "@vicecarloans/server#start:dev": {
+            "cache": false,
+            "dependsOn": [
+                "//#init",
+                "@vicecarloans/server#generate"
+            ]
+        },
+        "@vicecarloans/web#dev": {
             "cache": false
         }
     }
