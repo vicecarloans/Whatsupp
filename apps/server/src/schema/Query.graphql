@@ -1,3 +1,5 @@
 type Query {
   hello: Greeting
+  reports(offset: Int!, limit: Int!): [Report]
+  report(id: ID!): Report
 }

@@ -1,0 +1,10 @@
+type Proposal {
+  id: Int!
+  proposedStatus: ProposedStatus!
+  content: String!
+}
+
+input ProposalInput {
+  proposedStatus: ProposedStatus!
+  content: String!
+}

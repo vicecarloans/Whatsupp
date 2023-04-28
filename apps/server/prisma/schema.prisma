@@ -9,3 +9,42 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Report {
+  id           Int          @id @default(autoincrement())
+  name         String
+  description  String
+  status       ReportStatus
+  reportedBy   User         @relation(fields: [reportedById], references: [id])
+  reportedById Int
+  reportedAt   DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  proposals    Proposal[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  full_name String
+  email     String   @unique
+  avatar    String?
+  reports   Report[]
+}
+
+model Proposal {
+  id             Int            @id @default(autoincrement())
+  proposedStatus ProposedStatus
+  content        String
+  reportId       Int
+  report         Report         @relation(fields: [reportId], references: [id])
+}
+
+enum ReportStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum ProposedStatus {
+  ALLOW
+  BLOCK
+}

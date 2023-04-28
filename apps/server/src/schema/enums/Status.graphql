@@ -1,0 +1,10 @@
+enum ReportStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum ProposedStatus {
+  ALLOW
+  BLOCK
+}

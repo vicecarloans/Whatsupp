@@ -1,0 +1,17 @@
+type Report {
+  id: Int!
+  name: String!
+  description: String!
+  status: ReportStatus!
+  updatedAt: String
+  reportedBy: User!
+  proposals: [Proposal!]!
+}
+
+input ReportInput {
+  name: String!
+  description: String!
+  status: ReportStatus!
+  reportedBy: UserInput!
+  proposals: [ProposalInput!]!
+}
