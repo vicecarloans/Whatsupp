@@ -26,6 +26,10 @@ export class ReportsService {
           create: reportInput.proposals,
         },
       },
+      include: {
+        reportedBy: true,
+        proposals: true,
+      },
     });
   }
 
